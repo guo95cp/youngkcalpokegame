@@ -1,1 +1,1 @@
-# youngkcalpokegame
+# 포케 만들기 1.0

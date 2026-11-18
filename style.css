@@ -1,0 +1,456 @@
+@font-face {
+  font-family: Paperlogy;
+  src: url("fonts/Paperlogy-4Regular.ttf");
+}
+@font-face {
+  font-family: Paperlogy;
+  src: url("fonts/Paperlogy-7Bold.ttf");
+  font-weight: 700;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: Paperlogy, "Malgun Gothic", sans-serif;
+  color: #242922;
+}
+button {
+  font: inherit;
+  cursor: pointer;
+}
+body {
+  background: #393a36;
+}
+.app {
+  width: 100%;
+  min-height: 100svh;
+  height: 100svh;
+  position: relative;
+  overflow: hidden;
+  background: #b4afa5 url("images/background.png") center center/cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(8px, 1.2vh, 16px) clamp(12px, 2vw, 32px) 8px;
+}
+.topbar {
+  height: clamp(30px, 6vh, 100px);
+  flex: none;
+  display: flex;
+  align-items: center;
+}
+.brand img {
+  display: block;
+  max-width: min(18vw, 150px);
+  max-height: 0%;
+  object-fit: contain;
+}
+.game-layout {
+  display: grid;
+  grid-template-columns: minmax(180px, 22fr) minmax(0, 60fr) minmax(155px, 18fr);
+  gap: clamp(8px, 1.5vw, 26px);
+  flex: 1;
+  min-height: 0;
+  align-items: stretch;
+}
+.tray-section {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 4px 0;
+}
+.section-heading {
+  margin-bottom: 8px;
+}
+.section-heading span {
+  font-size: clamp(10px, 1vw, 13px);
+  font-weight: 700;
+}
+.section-heading h1 {
+  font-size: clamp(14px, 1.4vw, 22px);
+  margin: 5px 0 0;
+}
+.steps {
+  display: flex;
+  gap: 4px;
+  margin: 2px 0 8px;
+}
+.step {
+  height: 4px;
+  flex: 1;
+  background: #ffffff9c;
+  border-radius: 8px;
+  font-size: 0;
+}
+.step.active {
+  background: #a5a5a5;
+}
+.tray-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  gap: clamp(5px, 1vh, 12px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  flex: 1;
+  padding: 3px;
+  scrollbar-width: thin;
+}
+.tray-item {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  min-height: clamp(76px, 25vh, 180px);
+  touch-action: none;
+}
+.tray-item img {
+  display: block;
+  width: 115%;
+  height: clamp(140px, 12vh, 155px);
+  object-fit: contain;
+  pointer-events: none;
+}
+.tray-item span {
+  text-align: center;
+  font-size: clamp(10px, 0.85vw, 14px);
+  font-weight: 700;
+  line-height: 1.35;
+  margin-top: 3px;
+  word-break: keep-all;
+}
+.tray-item.missing {
+  outline: 1px dashed #b95454;
+}
+.tray-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex: none;
+}
+.image-button {
+  position: relative;
+  border: 0;
+  padding: 0;
+  min-width: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.tray-actions .image-button {
+  width: 50%;
+  height: clamp(35px, 7vh, 60px);
+  background: #292d28;
+  border-radius: 7px;
+  color: #fff;
+  font-weight: 700;
+}
+.tray-actions .image-button:first-child {
+  background: #f7f7f1;
+  color: #222;
+}
+.image-button img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+.image-button:has(img:not([style*="display: none"])) span {
+  opacity: 0;
+}
+.image-button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.bowl-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+}
+.bowl-frame {
+  width: min(100%, calc(100svh - 100px));
+  max-height: 100%;
+  aspect-ratio: 1;
+  touch-action: none;
+  position: relative;
+}
+#pokeCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+.receipt-side {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.5vh, 16px);
+  padding: 2px 0;
+}
+.receipt {
+  background: #fffef7;
+  box-shadow: 0 9px 24px #0003;
+  padding: clamp(9px, 1.1vw, 20px);
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 70%;
+  /* transform: rotate(-1deg); */
+}
+.receipt-head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+/* .receipt-head strong {
+  font-size: clamp(13px, 1.35vw, 23px);
+  letter-spacing: -0.5px;
+} */
+.receipt-head img {
+  display: block;
+  width: min(100%, 150px);
+  height: auto;
+  margin: 0 auto;
+}
+.receipt-head small {
+  font-size: clamp(8px, 0.75vw, 12px);
+}
+.receipt-rule {
+  border-top: 1px dashed #555;
+  margin: 10px 0;
+}
+.receipt-columns,
+.receipt-total,
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+}
+.receipt-columns {
+  font-size: 20px;
+  font-weight: 700;
+}
+.receipt-items {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding: 10px 0;
+  font-size: clamp(8px, 0.8vw, 15px);
+}
+.receipt-row {
+  margin-bottom: 9px;
+}
+.receipt-row span:first-child {
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+.receipt-empty {
+  color: #777;
+  line-height: 1.5;
+}
+.receipt-total {
+  font-size: clamp(12px, 1vw, 17px);
+}
+.reset-link {
+  border: 0;
+  background: none;
+  text-decoration: underline;
+  font-size: 12px;
+  color: #777;
+  margin-top: 12px;
+  padding: 3px;
+}
+.complete-button {
+  height: clamp(44px, 30vh, 600px);
+  width: 100%;
+  flex: none;
+  background: none;
+  border-radius: 8px;
+  font-weight: 700;
+  color: #173b18;
+  font-size: clamp(12px, 1.1vw, 18px);
+}
+.complete-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.help {
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: clamp(9px, 0.8vw, 12px);
+  color: #2c312b;
+  text-shadow: 0 1px 3px #fff;
+}
+.drag-ghost {
+  position: fixed;
+  pointer-events: none;
+  z-index: 60;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 7px 6px #0004);
+}
+.hidden {
+  display: none !important;
+}
+.dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: #0009;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.dialog-card {
+  background: white;
+  border-radius: 14px;
+  padding: 24px;
+  width: min(100%, 340px);
+  text-align: center;
+}
+.controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.controls button {
+  border: 0;
+  border-radius: 8px;
+  padding: 14px;
+  flex: 1;
+  font-weight: 700;
+}
+.primary {
+  background: #dbf7d9;
+}
+.light {
+  background: #eee;
+}
+.result {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: #ffffff url("images/background.png") center/cover no-repeat;
+  overflow-y: auto;
+  text-align: center;
+  padding: 20px;
+}
+.result canvas {
+  display: block;
+  width: min(500px, 90vw);
+  max-width: 100%;
+  margin: 0 auto 12px;
+  border-radius: 12px;
+}
+.nutrition {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.nutrition div {
+  background: #fffd;
+  padding: 10px;
+  border-radius: 8px;
+}
+.notice {
+  font-size: 11px;
+}
+.result .controls,
+.share-poke-btn {
+  max-width: 500px;
+  margin: 12px auto;
+}
+.share-poke-btn {
+  display: block;
+  padding: 14px;
+  background: white;
+  color: #173b18;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 8px;
+}
+.rotate-notice {
+  display: none;
+}
+@media (orientation: portrait) and (max-width: 800px) {
+  .rotate-notice {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: #f3f0e8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+  }
+  .rotate-icon {
+    font-size: 64px;
+    color: #338d2a;
+    margin-bottom: 16px;
+  }
+  .rotate-notice p {
+    font-size: 14px;
+  }
+  .app {
+    visibility: hidden;
+  }
+}
+@media (orientation: landscape) and (max-height: 520px) {
+  .app {
+    padding-top: 5px;
+    padding-bottom: 4px;
+  }
+  .topbar {
+    height: 45px;
+  }
+  .game-layout {
+    grid-template-columns: minmax(165px, 24fr) minmax(0, 57fr) minmax(
+        140px,
+        19fr
+      );
+    gap: 8px;
+  }
+  .bowl-frame {
+    width: min(100%, calc(100svh - 58px));
+  }
+  .section-heading {
+    margin-bottom: 3px;
+  }
+  .steps {
+    margin-bottom: 3px;
+  }
+  .tray-item {
+    min-height: 76px;
+  }
+  .tray-item img {
+    height: 53px;
+  }
+  .receipt-rule {
+    margin: 6px 0;
+  }
+  .receipt-items {
+    padding: 5px 0;
+  }
+  .help {
+    font-size: 9px;
+  }
+}

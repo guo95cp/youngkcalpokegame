@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <title>영칼로리포케 | 나만의 포케 만들기</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="rotate-notice">
+      <div class="rotate-icon">↻</div>
+      <strong>휴대폰을 가로로 돌려주세요</strong>
+      <p>가로 화면에서 포케를 만들 수 있어요.</p>
+    </div>
+    <main class="app" id="app">
+      <!-- <header class="topbar">
+        <div class="brand">
+          <img src="images/youngkcal.png" alt="영칼로리포케 로고" />
+        </div> -->
+      </header>
+      <div class="game-layout">
+        <section class="tray-section" aria-label="재료 선택">
+          <div class="section-heading">
+            <span id="stepCounter">STEP 1 / 4</span>
+            <h1 id="stepTitle">탄수화물을 골라주세요</h1>
+          </div>
+          <nav class="steps" id="steps" aria-label="게임 단계"></nav>
+          <div class="tray-grid" id="trayGrid"></div>
+          <div class="tray-actions">
+            <button
+              type="button"
+              id="prevBtn"
+              class="image-button"
+              aria-label="이전 단계"
+            >
+              <img
+                src="images/btn-prev.png"
+                alt=""
+                onerror="this.style.display = 'none'"
+              /><span>이전</span>
+            </button>
+            <button
+              type="button"
+              id="nextBtn"
+              class="image-button"
+              aria-label="다음 단계"
+            >
+              <img
+                src="images/btn-next.png"
+                alt=""
+                onerror="this.style.display = 'none'"
+              /><span>다음</span>
+            </button>
+          </div>
+        </section>
+        <section class="bowl-section" aria-label="포케 그릇">
+          <div class="bowl-frame" id="bowlFrame">
+            <canvas
+              id="pokeCanvas"
+              aria-label="재료를 드래그해 배치하는 포케 그릇"
+            ></canvas>
+          </div>
+        </section>
+        <aside class="receipt-side">
+          <div class="receipt">
+            <div class="receipt-head">
+              <img src="images/youngkcal.png" alt="영칼로리포케 로고" />
+              <!-- <small>MY POKE RECEIPT</small> -->
+            </div>
+            <div class="receipt-rule"></div>
+            <div class="receipt-columns"><span>선택 재료</span><span>수량</span></div>
+            <div class="receipt-items" id="receiptItems">
+              <p class="receipt-empty">재료를 그릇에 담아주세요</p>
+            </div>
+            <div class="receipt-bottom">
+              <div class="receipt-rule"></div>
+              <div class="receipt-total">
+                <strong>TOTAL</strong><strong id="receiptCount">0 / 15</strong>
+              </div>
+              <button type="button" id="resetBtn" class="reset-link">
+                다시 만들래요!
+              </button>
+            </div>
+          </div>
+          <button
+            type="button"
+            id="completeBtn"
+            class="image-button complete-button"
+            aria-label="포케 완성하기"
+          >
+            <img
+              src="images/btn-complete.png"
+              alt=""
+              onerror="this.style.display = 'none'"
+            /><span>포케 완성</span>
+          </button>
+        </aside>
+      </div>
+      <!-- <p class="help" id="help" aria-live="polite">
+        재료를 그릇 위로 드래그해 담아주세요. 최대 20개까지 선택할 수 있어요.
+      </p> -->
+      <section class="result hidden" id="result">
+        <canvas id="resultCanvas"></canvas>
+        <div id="nutritionInfo" class="nutrition"></div>
+        <p class="notice">
+          ※ 본 영양 정보는 임의로 설정된 참고용 수치로, 실제 영양성분과 차이가
+          있을 수 있습니다.
+        </p>
+        <div class="controls">
+          <button id="saveBtn" class="primary">이미지 저장하기</button
+          ><button id="restartBtn" class="light">다시 만들기</button>
+        </div>
+        <a
+          href="https://연결할-링크-주소"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="share-poke-btn"
+          >나만의 포케 자랑하기</a
+        >
+      </section>
+      <div
+        class="dialog hidden"
+        id="confirmDialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="dialogTitle"
+      >
+        <div class="dialog-card">
+          <h2 id="dialogTitle">전체 초기화할까요?</h2>
+          <p>선택한 재료가 모두 사라집니다.</p>
+          <div class="controls">
+            <button id="cancelReset" class="light">취소</button
+            ><button id="confirmReset" class="primary">초기화</button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="data/ingredients.js"></script>
+    <script src="data/nutrition.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>
